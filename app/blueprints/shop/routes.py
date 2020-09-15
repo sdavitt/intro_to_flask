@@ -1,6 +1,7 @@
 from .import bp as shop
-from flask import flash, request, render_template, redirect, url_for, session
+from flask import flash, request, render_template, redirect, url_for, session, jsonify
 from app.blueprints.shop.models import Product
+import stripe
 
 @shop.route('/')
 def get_products():
@@ -59,3 +60,20 @@ def clear_cart():
     session['cart']['cart_total'] = 0
     flash('All items have been removed from cart', 'success')
     return redirect(url_for('shop.cart'))
+
+@shop.route('/checkout')
+def checkout():
+    print("It Works")
+    context = {}
+    return render_template('checkout.html', **context)
+
+@shop.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    stripe_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=[{
+            'price_data': {
+                'currency': 'usd',
+                'product_data':
+            }
+        }

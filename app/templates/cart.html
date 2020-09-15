@@ -62,10 +62,14 @@
         </div>
     </div>
     <div class="pull-right" style="margin: 10px">
-        <a href="" class="btn btn-success pull-right">Checkout</a>
+        <a href="{{ url_for('shop.checkout') }}" class="btn btn-success pull-right">Checkout</a>
         <div class="pull-right" style="margin: 5px">
             Total price: <b>{{ '${:,.2f}'.format(cart_total) }}</b>
         </div>
     </div>
 </div>
+{% block script %}
+    {{ super() }}
+    <script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
 {% endblock %}
