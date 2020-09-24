@@ -12,3 +12,19 @@ class Product(db.Model):
     def __repr__(self):
         return f"<{self.name} | {self.price}>"
 
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'name': self.name,
+            'image': self.image,
+            'description': self.description,
+            'price': self.price,
+            'created_on': self.created_on,
+            'in_stock': self.in_stock,
+        }
+        return data
+
+    def from_dict(self, data):
+        for field in ['name', 'image', 'description', 'price']:
+            if field in data:
+                setattr(self, field, data[field])
